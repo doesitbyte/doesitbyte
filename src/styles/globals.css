@@ -3,25 +3,45 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-primary: #11181C;
+  --foreground-secondary: #687076;
+  --background-primary: #F8F9FA;
+  --background-secondary: #d2d2d2;
+  --accent-primary: #3FCF8E;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+:root.dark {
+  --foreground-primary: #EDEDEDED;
+  --foreground-secondary: #909090;
+  --background-primary: #1C1C1C;
+  --background-secondary: #323232;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--background-primary);
+  color: var(--foreground-primary);
+}
+
+.primaryColor {
+  color: var(--foreground-primary);
+}
+
+.primaryColorBg {
+  background-color: var(--background-primary);
+}
+
+.secondaryColor {
+  color: var(--foreground-secondary);
+}
+
+.secondaryColorBg {
+  background-color: var(--background-secondary);
+}
+
+.accentColor {
+  color: var(--accent-primary);
+}
+
+.accentColorBg {
+  background-color: var(--accent-primary);
 }
