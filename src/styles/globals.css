@@ -8,12 +8,13 @@
   --background-primary: #F8F9FA;
   --background-secondary: #d2d2d2;
   --accent-primary: #3FCF8E;
+  --accent-secondary: #3fcf8e65;
 }
 
 :root.dark {
   --foreground-primary: #EDEDEDED;
   --foreground-secondary: #909090;
-  --background-primary: #1C1C1C;
+  --background-primary: #181818;
   --background-secondary: #323232;
 }
 
@@ -44,4 +45,16 @@ body {
 
 .accentColorBg {
   background-color: var(--accent-primary);
+}
+
+.accentColorSecondary {
+  color: var(--accent-secondary);
+}
+
+.accentColorSecondaryBg {
+  background-color: var(--accent-secondary);
+}
+
+#tooltip {
+  padding: 0 !important;
 }
