@@ -28,9 +28,36 @@ module.exports = {
           }
         },
       },
+      colors: {
+        'primaryFgLight': '#11181C',
+        'secondaryFgLight': '#687076',
+        'primaryBgLight': '#F8F9FA',
+        'secondaryBgLight': '#11181C',
+        'primaryFgDark': '#EDEDEDED',
+        'secondaryFgDark': '#909090',
+        'primaryBgDark': '#181818',
+        'secondaryBgDark': '#323232',
+        'primaryAccent': '#3FCF8E',
+        'secondaryAccent': '#3fcf8e65',
+      },
+      keyframes: {
+        slide: {
+          'from': {
+            transform: 'translateY(-4px)',
+            opacity: 0,
+          },
+          'to': {
+            transform: 'translateY(0)',
+            opacity: 1,
+          }
+        },
+      },
+      animation: {
+        'slide': 'slide 100ms',
+        'slidereverse': 'slide 2000ms reverse ease-in',
+      }
     }
   },
   plugins: [
-    require('flowbite/plugin')
   ],
 }
