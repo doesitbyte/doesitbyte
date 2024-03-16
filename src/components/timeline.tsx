@@ -4,34 +4,39 @@ import { useState } from "react";
 import NameTag from "./nametag";
 import { ITimeline } from "@/lib/interfaces/timeline";
 import { getTerminalOutput } from "@/lib/commands/parent";
+import { time } from "console";
 
 const Timeline = () => {
   const [timeline, setTimeline] = useState<ITimeline[]>([]);
   const [input, setInput] = useState("");
+  const [navigator, setNavigator] = useState(-1);
   return (
     <>
       <div>
-        {timeline.map((item) => {
+        {timeline.map((item, index) => {
           return (
-            <>
+            <div key={index}>
               <div className="flex">
                 <NameTag user="guest" directory="home" />
                 <div className="ml-2">
                   <p>{item.inputText}</p>
                 </div>
               </div>
-              <div>
-                <p>
-                  {item.output} at {item.timestamp.toISOString()}
-                </p>
-              </div>
-            </>
+              <div>{item.output}</div>
+            </div>
           );
         })}
       </div>
       <div className="flex">
-        <NameTag user="guest" directory="home" />
+        <NameTag user="kaustubh" directory="home" />
         <input
+          ref={(ref) => ref && ref.focus()}
+          onFocus={(e) =>
+            e.currentTarget.setSelectionRange(
+              e.currentTarget.value.length,
+              e.currentTarget.value.length
+            )
+          }
           value={input}
           autoComplete="off"
           autoFocus
@@ -42,6 +47,36 @@ const Timeline = () => {
             setInput(e.target.value);
           }}
           onKeyDown={async (e) => {
+            const key = e.key;
+            let newNav;
+            let newInput;
+
+            switch (key) {
+              case "ArrowUp":
+                newNav =
+                  navigator == -1
+                    ? timeline.length - 1
+                    : navigator == 0
+                    ? navigator
+                    : navigator - 1;
+                newInput = newNav == -1 ? "" : timeline[newNav].inputText;
+                setNavigator(newNav);
+                setInput(newInput);
+                break;
+
+              case "ArrowDown":
+                newNav =
+                  navigator == timeline.length - 1
+                    ? -1
+                    : navigator == -1
+                    ? navigator
+                    : navigator + 1;
+                newInput = newNav == -1 ? "" : timeline[newNav].inputText;
+                setNavigator(newNav);
+                setInput(newInput);
+                break;
+            }
+
             if (e.key !== "Enter") return;
             if (input === "clear") {
               setTimeline([]);

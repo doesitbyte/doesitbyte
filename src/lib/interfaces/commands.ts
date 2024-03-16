@@ -6,7 +6,7 @@ interface ICommandReturn {
 export interface ICommandsList {
   description: string;
   options?: { [key: string]: ICommandsList };
-  action: (param?: string) => Promise<ICommandReturn>;
+  action: (param?: string[]) => Promise<ICommandReturn>;
 }
 
 // export const sampleCommandsList: { [key: string]: ICommandsList } = {

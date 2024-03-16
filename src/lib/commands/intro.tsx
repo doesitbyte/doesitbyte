@@ -7,7 +7,7 @@ export const getIntro = async (animal: string = "dog") => {
   const quoteAuthor = quote.author;
   const location = await getIPLocation(false);
   const locationCity = location.city.name;
-  const animalStr = animals[animal];
+  const animalStr = animals[animal] || "dog";
 
   return {
     raw: animalStr.concat(
@@ -19,12 +19,12 @@ export const getIntro = async (animal: string = "dog") => {
       locationCity
     ),
     jsx: (
-      <div className="	flex-col	text-center w-fit">
+      <div className="flex-col text-center w-fit">
         <div className="text-left inline-block">
           <span style={{ whiteSpace: "pre-line" }}>{animalStr}</span>
         </div>
         <div>{quote.content}</div>
-        <div> - {quote.author}</div>
+        <div> ~ {quote.author}</div>
         <div>I wonder how the weather is in {location.city.name} ...</div>
       </div>
     ),
