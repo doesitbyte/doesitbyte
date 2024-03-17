@@ -4,7 +4,6 @@ import { useState } from "react";
 import NameTag from "./nametag";
 import { ITimeline } from "@/lib/interfaces/timeline";
 import { getTerminalOutput } from "@/lib/commands/parent";
-import { time } from "console";
 
 const Timeline = () => {
   const [timeline, setTimeline] = useState<ITimeline[]>([]);
