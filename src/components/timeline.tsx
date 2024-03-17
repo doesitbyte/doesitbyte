@@ -1,14 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NameTag from "./nametag";
 import { ITimeline } from "@/lib/interfaces/timeline";
 import { getTerminalOutput } from "@/lib/commands/parent";
+
+const initialCommands = ["start"];
 
 const Timeline = () => {
   const [timeline, setTimeline] = useState<ITimeline[]>([]);
   const [input, setInput] = useState("");
   const [navigator, setNavigator] = useState(-1);
+
+  useEffect(() => {
+    console.log("run");
+
+    initialCommands.map(async (value) => {
+      console.log(value);
+
+      setTimeline([
+        ...timeline,
+        {
+          inputText: value,
+          output: (await getTerminalOutput(value.trim())).jsx,
+          timestamp: new Date(),
+        },
+      ]);
+    });
+  }, []);
+
   return (
     <>
       <div>

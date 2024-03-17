@@ -2,10 +2,10 @@ import { animals } from "@/lib/animals";
 import { getIPLocation, getRandomQuote } from "../actions";
 
 export const getIntro = async (animal: string = "dog") => {
-  const quote = await getRandomQuote(false);
+  const quote = await getRandomQuote(true);
   const quoteContent = quote.content;
   const quoteAuthor = quote.author;
-  const location = await getIPLocation(false);
+  const location = await getIPLocation(true);
   const locationCity = location.city.name;
   const animalStr = animals[animal] || "dog";
 
