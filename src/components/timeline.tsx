@@ -16,8 +16,6 @@ const Timeline = () => {
     console.log("run");
 
     initialCommands.map(async (value) => {
-      console.log(value);
-
       setTimeline([
         ...timeline,
         {

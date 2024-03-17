@@ -34,6 +34,9 @@ export const getRandomQuote = async (useAPI: boolean) => {
 
 export const getIPLocation = async (useAPI: boolean) => {
   if (!useAPI) return sampleLocationResponse;
+
+  console.log(process.env.GEOLOC_API_KEY);
+
   try {
     const response: ILocationResponse = (
       await axios.get(
