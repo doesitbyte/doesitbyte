@@ -35,13 +35,13 @@ export const getRandomQuote = async (useAPI: boolean) => {
 export const getIPLocation = async (useAPI: boolean) => {
   if (!useAPI) return sampleLocationResponse;
 
-  console.log(process.env.GEOLOC_API_KEY);
+  console.log(process.env.NEXT_PUBLIC_GEOLOC_API_KEY);
 
   try {
     const response: ILocationResponse = (
       await axios.get(
         getURLWithParams("https://api.geoapify.com/v1", "/ipinfo", {
-          apiKey: process.env.GEOLOC_API_KEY,
+          apiKey: process.env.NEXT_PUBLIC_GEOLOC_API_KEY,
         })
       )
     ).data;
