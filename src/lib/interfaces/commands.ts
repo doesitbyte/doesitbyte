@@ -1,4 +1,4 @@
-interface ICommandReturn {
+export interface ICommandReturn {
   raw: string;
   jsx: JSX.Element;
 }

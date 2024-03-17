@@ -1,36 +1,130 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import NameTag from "./nametag";
-import { ITimeline } from "@/lib/interfaces/timeline";
+import { CommandTypes, ITimeline } from "@/lib/interfaces/timeline";
 import { getTerminalOutput } from "@/lib/commands/parent";
+import { ICommandReturn } from "@/lib/interfaces/commands";
 
-const initialCommands = ["start"];
+const initialCommands: string[] = ["start"];
 
 const Timeline = () => {
-  const [timeline, setTimeline] = useState<ITimeline[]>([]);
-  const [input, setInput] = useState("");
-  const [navigator, setNavigator] = useState(-1);
+  const [history, setHistory] = useState<ITimeline[]>([]);
+  const [input, setInput] = useState<string>("");
+  const [historyIndex, setHistoryIndex] = useState<number>(-1);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    console.log("run");
-
-    initialCommands.map(async (value) => {
-      setTimeline([
-        ...timeline,
-        {
-          inputText: value,
-          output: (await getTerminalOutput(value.trim())).jsx,
-          timestamp: new Date(),
-        },
-      ]);
-    });
+    const executeInitialCommands = async () => {
+      for (let command of initialCommands) {
+        await executeCommand(command.trim());
+      }
+    };
+    executeInitialCommands();
   }, []);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [history]);
+
+  useEffect(() => {
+    const focusInput = () => inputRef.current?.focus();
+    focusInput();
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") {
+        focusInput();
+      }
+    });
+    document.addEventListener("click", () => {
+      focusInput();
+    });
+    return () => {
+      document.removeEventListener("visibilitychange", focusInput);
+    };
+  }, []);
+
+  const executeCommand = async (command: string): Promise<void> => {
+    let output: ICommandReturn;
+    let commandType: CommandTypes;
+    switch (command) {
+      case "clear":
+        output = {
+          jsx: <></>,
+          raw: "",
+        };
+        commandType = CommandTypes.InterfaceCommand;
+        break;
+      case "":
+        output = {
+          jsx: <></>,
+          raw: "",
+        };
+        commandType = CommandTypes.ExecutableCommand;
+        break;
+      default:
+        output = await getTerminalOutput(command);
+        commandType = CommandTypes.ExecutableCommand;
+    }
+
+    setHistory((prevHsitory) => [
+      ...prevHsitory,
+      {
+        type: commandType,
+        inputText: command,
+        output: output.jsx,
+        timestamp: new Date(),
+      },
+    ]);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value);
+  };
+
+  const handleKeyDown = async (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const trimmedInput = input.trim();
+      if (trimmedInput != undefined) {
+        await executeCommand(trimmedInput);
+        setInput("");
+        setHistoryIndex(-1);
+      }
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+
+      if (historyIndex < history.length - 1) {
+        const newIndex = historyIndex + 1;
+        setHistoryIndex(newIndex);
+        setInput(
+          history[history.length - 1 - newIndex].inputText?.toString() || ""
+        );
+      }
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      const newIndex = historyIndex > 0 ? historyIndex - 1 : -1;
+      setHistoryIndex(newIndex);
+      setInput(
+        newIndex >= 0
+          ? history[history.length - 1 - newIndex].inputText?.toString() || ""
+          : ""
+      );
+    }
+  };
+
+  const lastClearIndex = history.findLastIndex((c) => c.type === 0);
+  const renderedHistory = history.slice(
+    lastClearIndex >= 0 ? lastClearIndex + 1 : 0,
+    history.length
+  );
 
   return (
     <>
       <div>
-        {timeline.map((item, index) => {
+        {renderedHistory.map((item, index) => {
           return (
             <div key={index}>
               <div className="flex">
@@ -45,71 +139,19 @@ const Timeline = () => {
         })}
       </div>
       <div className="flex">
-        <NameTag user="kaustubh" directory="home" />
+        <div ref={bottomRef}></div>
+        <NameTag user="guest" directory="home" />
         <input
-          ref={(ref) => ref && ref.focus()}
-          onFocus={(e) =>
-            e.currentTarget.setSelectionRange(
-              e.currentTarget.value.length,
-              e.currentTarget.value.length
-            )
-          }
+          ref={inputRef}
           value={input}
           autoComplete="off"
           autoFocus
-          className="appearance-none bg-transparent outline-none focus:outline-none text-textWhite ml-2"
+          className="appearance-none bg-transparent outline-none focus:outline-none text-black dark:text-textWhite ml-2"
           type="text"
           name="terminalInput"
-          onChange={(e) => {
-            setInput(e.target.value);
-          }}
-          onKeyDown={async (e) => {
-            const key = e.key;
-            let newNav;
-            let newInput;
-
-            switch (key) {
-              case "ArrowUp":
-                newNav =
-                  navigator == -1
-                    ? timeline.length - 1
-                    : navigator == 0
-                    ? navigator
-                    : navigator - 1;
-                newInput = newNav == -1 ? "" : timeline[newNav].inputText;
-                setNavigator(newNav);
-                setInput(newInput);
-                break;
-
-              case "ArrowDown":
-                newNav =
-                  navigator == timeline.length - 1
-                    ? -1
-                    : navigator == -1
-                    ? navigator
-                    : navigator + 1;
-                newInput = newNav == -1 ? "" : timeline[newNav].inputText;
-                setNavigator(newNav);
-                setInput(newInput);
-                break;
-            }
-
-            if (e.key !== "Enter") return;
-            if (input === "clear") {
-              setTimeline([]);
-              setInput("");
-              return;
-            }
-            setTimeline([
-              ...timeline,
-              {
-                inputText: input,
-                output: (await getTerminalOutput(input.trim())).jsx,
-                timestamp: new Date(),
-              },
-            ]);
-            setInput("");
-          }}
+          placeholder="enter command here ..."
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
       </div>
     </>
