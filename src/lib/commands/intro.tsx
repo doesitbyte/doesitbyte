@@ -6,7 +6,7 @@ export const getIntro = async (animal: string = "dog") => {
   const quoteContent = quote.content;
   const quoteAuthor = quote.author;
   const location = await getIPLocation(true);
-  const locationCity = location.city.name;
+  const locationCity = location.city;
   const animalStr = animals[animal] || "dog";
 
   return {
@@ -25,7 +25,7 @@ export const getIntro = async (animal: string = "dog") => {
         </div>
         <div>{quote.content}</div>
         <div> ~ {quote.author}</div>
-        <div>I wonder how the weather is in {location.city.name} ...</div>
+        <div>I wonder how the weather is in {locationCity} ...</div>
       </div>
     ),
   };

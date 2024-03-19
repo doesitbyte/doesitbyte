@@ -1,125 +1,60 @@
-export interface ILocationResponse {
-  city: City;
-  continent: Continent;
-  country: Country;
-  location: ILocation;
-  subdivisions: Subdivision[];
-  state: State;
-  datasource: Datasource[];
+export interface IGeoLocation {
   ip: string;
-}
-interface Datasource {
-  name: string;
-  attribution: string;
-  license: string;
-}
-interface State {
-  name: string;
-}
-interface Subdivision {
-  names: Names;
-}
-interface ILocation {
+  network: string;
+  version: string;
+  city: string;
+  region: string;
+  region_code: string;
+  country: string;
+  country_name: string;
+  country_code: string;
+  country_code_iso3: string;
+  country_capital: string;
+  country_tld: string;
+  continent_code: string;
+  in_eu: boolean;
+  postal: string;
   latitude: number;
   longitude: number;
-}
-interface Country {
-  geoname_id: number;
-  iso_code: string;
-  names: Names2;
-  name: string;
-  name_native: string;
-  phone_code: string;
-  capital: string;
+  timezone: string;
+  utc_offset: string;
+  country_calling_code: string;
   currency: string;
-  flag: string;
-  languages: Language[];
-}
-interface Language {
-  iso_code: string;
-  name: string;
-  name_native: string;
-}
-interface Continent {
-  code: string;
-  geoname_id: number;
-  names: Names2;
-  name: string;
-}
-interface Names2 {
-  de: string;
-  en: string;
-  es: string;
-  fa: string;
-  fr: string;
-  ja: string;
-  ko: string;
-  "pt-BR": string;
-  ru: string;
-  "zh-CN": string;
-}
-interface City {
-  name: string;
-  names: Names;
-}
-interface Names {
-  en: string;
+  currency_name: string;
+  languages: string;
+  country_area: number;
+  country_population: number;
+  asn: string;
+  org: string;
 }
 
-export const sampleLocationResponse: ILocationResponse = {
-  city: { name: "Mumbai", names: { en: "Mumbai" } },
-  continent: {
-    code: "AS",
-    geoname_id: 6255147,
-    names: {
-      de: "Asien",
-      en: "Asia",
-      es: "Asia",
-      fa: " آسیا",
-      fr: "Asie",
-      ja: "アジア大陸",
-      ko: "아시아",
-      "pt-BR": "Ásia",
-      ru: "Азия",
-      "zh-CN": "亚洲",
-    },
-    name: "Asia",
-  },
-  country: {
-    geoname_id: 1269750,
-    iso_code: "IN",
-    names: {
-      de: "Indien",
-      en: "India",
-      es: "India",
-      fa: "هند",
-      fr: "Inde",
-      ja: "インド",
-      ko: "인도",
-      "pt-BR": "Índia",
-      ru: "Индия",
-      "zh-CN": "印度",
-    },
-    name: "India",
-    name_native: "भारत",
-    phone_code: "91",
-    capital: "New Delhi",
-    currency: "INR",
-    flag: "🇮🇳",
-    languages: [
-      { iso_code: "hi", name: "Hindi", name_native: "हिन्दी" },
-      { iso_code: "en", name: "English", name_native: "English" },
-    ],
-  },
-  location: { latitude: 19.0748, longitude: 72.8856 },
-  subdivisions: [{ names: { en: "Maharashtra" } }],
-  state: { name: "Maharashtra" },
-  datasource: [
-    {
-      name: "IP to City Lite",
-      attribution: "<a href='https://db-ip.com'>IP Geolocation by DB-IP</a>",
-      license: "Creative Commons Attribution License",
-    },
-  ],
-  ip: "45.127.45.33",
+export const sampleGeoLocationResponse: IGeoLocation = {
+  ip: "45.127.44.60",
+  network: "45.127.44.0/22",
+  version: "IPv4",
+  city: "Mumbai",
+  region: "Maharashtra",
+  region_code: "MH",
+  country: "IN",
+  country_name: "India",
+  country_code: "IN",
+  country_code_iso3: "IND",
+  country_capital: "New Delhi",
+  country_tld: ".in",
+  continent_code: "AS",
+  in_eu: false,
+  postal: "400072",
+  latitude: 19.0748,
+  longitude: 72.8856,
+  timezone: "Asia/Kolkata",
+  utc_offset: "+0530",
+  country_calling_code: "+91",
+  currency: "INR",
+  currency_name: "Rupee",
+  languages:
+    "en-IN,hi,bn,te,mr,ta,ur,gu,kn,ml,or,pa,as,bh,sat,ks,ne,sd,kok,doi,mni,sit,sa,fr,lus,inc",
+  country_area: 3287590.0,
+  country_population: 1352617328,
+  asn: "AS134674",
+  org: "TATA PLAY BROADBAND PRIVATE LIMITED",
 };

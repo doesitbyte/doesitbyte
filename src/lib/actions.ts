@@ -3,16 +3,37 @@
 import axios from "axios";
 import { IQuoteResponse, sampleQuoteResponse } from "./interfaces/quotesAPI";
 import {
-  ILocationResponse,
-  sampleLocationResponse,
+  IGeoLocation,
+  sampleGeoLocationResponse,
 } from "./interfaces/locationAPI";
+import { IIP, sampleIPResponse } from "./interfaces/ip";
 
 const getURLWithParams = (base: string, endpoint: string, params: {}) => {
   const paramsStr = new URLSearchParams(params).toString();
   return base + endpoint + "?" + paramsStr;
 };
 
-export const getRandomQuote = async (useAPI: boolean) => {
+export const getIP = async (useAPI: boolean): Promise<IIP> => {
+  if (!useAPI) return sampleIPResponse;
+  try {
+    const response: IIP = (
+      await axios.get(
+        getURLWithParams("https://api.ipify.org", "", {
+          format: "json",
+        })
+      )
+    ).data;
+
+    return response;
+  } catch (err) {
+    console.log(err);
+    return sampleIPResponse;
+  }
+};
+
+export const getRandomQuote = async (
+  useAPI: boolean
+): Promise<IQuoteResponse> => {
   if (!useAPI) return sampleQuoteResponse;
   try {
     const response: IQuoteResponse = (
@@ -33,22 +54,17 @@ export const getRandomQuote = async (useAPI: boolean) => {
 };
 
 export const getIPLocation = async (useAPI: boolean) => {
-  if (!useAPI) return sampleLocationResponse;
-
-  console.log(process.env.NEXT_PUBLIC_GEOLOC_API_KEY);
+  if (!useAPI) return sampleGeoLocationResponse;
 
   try {
-    const response: ILocationResponse = (
-      await axios.get(
-        getURLWithParams("https://api.geoapify.com/v1", "/ipinfo", {
-          apiKey: process.env.NEXT_PUBLIC_GEOLOC_API_KEY,
-        })
-      )
+    const ip: string = (await getIP(true)).ip;
+    const response: IGeoLocation = (
+      await axios.get(getURLWithParams("https://ipapi.co/" + ip, "/json", {}))
     ).data;
 
     return response;
   } catch (err) {
     console.log(err);
-    return sampleLocationResponse;
+    return sampleGeoLocationResponse;
   }
 };

@@ -5,6 +5,7 @@ import NameTag from "./nametag";
 import { CommandTypes, ITimeline } from "@/lib/interfaces/timeline";
 import { getTerminalOutput } from "@/lib/commands/parent";
 import { ICommandReturn } from "@/lib/interfaces/commands";
+import { getIP } from "@/lib/actions";
 
 const initialCommands: string[] = ["start"];
 
@@ -14,13 +15,22 @@ const Timeline = () => {
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [user, setUser] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    const executeGetIP = async () => {
+      const ip: string = (await getIP(true)).ip;
+      setUser(ip);
+    };
+
     const executeInitialCommands = async () => {
       for (let command of initialCommands) {
         await executeCommand(command.trim());
       }
+      setLoading(false);
     };
+    executeGetIP();
     executeInitialCommands();
   }, []);
 
@@ -123,37 +133,43 @@ const Timeline = () => {
 
   return (
     <>
-      <div>
-        {renderedHistory.map((item, index) => {
-          return (
-            <div key={index}>
-              <div className="flex">
-                <NameTag user="guest" directory="home" />
-                <div className="ml-2">
-                  <p>{item.inputText}</p>
+      {loading ? (
+        <div>loading ...</div>
+      ) : (
+        <div>
+          <div>
+            {renderedHistory.map((item, index) => {
+              return (
+                <div key={index}>
+                  <div className="flex">
+                    <NameTag user={user} directory="home" />
+                    <div className="ml-2">
+                      <p>{item.inputText}</p>
+                    </div>
+                  </div>
+                  <div>{item.output}</div>
                 </div>
-              </div>
-              <div>{item.output}</div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="flex">
-        <div ref={bottomRef}></div>
-        <NameTag user="guest" directory="home" />
-        <input
-          ref={inputRef}
-          value={input}
-          autoComplete="off"
-          autoFocus
-          className="appearance-none bg-transparent outline-none focus:outline-none text-black dark:text-textWhite ml-2"
-          type="text"
-          name="terminalInput"
-          placeholder="enter command here ..."
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-        />
-      </div>
+              );
+            })}
+          </div>
+          <div className="flex">
+            <div ref={bottomRef}></div>
+            <NameTag user={user} directory="home" />
+            <input
+              ref={inputRef}
+              value={input}
+              autoComplete="off"
+              autoFocus
+              className="appearance-none bg-transparent outline-none focus:outline-none text-black dark:text-textWhite ml-2"
+              type="text"
+              name="terminalInput"
+              placeholder="enter command here ..."
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 };
