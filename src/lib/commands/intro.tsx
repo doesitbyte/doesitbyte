@@ -42,18 +42,30 @@ export const getIntro = async (animal: string = "panda") => {
             <div>
               <span className="text-textGreen">IP:</span> {location.network}
             </div>
-            <div>
-              <span className="text-textGreen">Browser:</span>{" "}
-              {deviceData.browserName} {deviceData.browserFullVersion}
-            </div>
-            <div>
-              <span className="text-textGreen">OS:</span> {deviceData.osName}{" "}
-              {deviceData.osVersion}
-            </div>
-            <div>
-              <span className="text-textGreen">Engine:</span>{" "}
-              {deviceData.engineName} {deviceData.engineVersion}
-            </div>
+            <rdd.BrowserView>
+              <div>
+                <span className="text-textGreen">Browser:</span>{" "}
+                {deviceData.browserName} {deviceData.browserFullVersion}
+              </div>
+              <div>
+                <span className="text-textGreen">OS:</span> {deviceData.osName}{" "}
+                {deviceData.osVersion}
+              </div>
+              <div>
+                <span className="text-textGreen">Engine:</span>{" "}
+                {deviceData.engineName} {deviceData.engineVersion}
+              </div>
+            </rdd.BrowserView>
+            <rdd.MobileView>
+              <div>
+                <span className="text-textGreen">Device:</span>{" "}
+                {deviceData.vendor} {deviceData.model}
+              </div>
+              <div>
+                <span className="text-textGreen">OS:</span> {deviceData.os}{" "}
+                {deviceData.osVersion}
+              </div>
+            </rdd.MobileView>
             <div>
               <span className="text-textGreen">Location:</span> {location.city},{" "}
               {location.country_name} ({location.latitude}, {location.longitude}
