@@ -2,34 +2,11 @@ import { ICommandsList } from "../interfaces/commands";
 import { getIntro } from "./intro";
 
 export const commandsList: { [key: string]: ICommandsList } = {
-  /*   help: {
-    description: "Lists out Commands and their descriptions",
-    action: (param = "") => {
-      return param.toLowerCase();
-    },
-    options: {
-      optionName: {
-        description: "sample optn. desc.",
-        action: (param = "sample optn. param") => {s
-          return param.toUpperCase();
-        },
-      },
-    },
-  }, */
-  start: {
+  welcome: {
     async action(optionChain) {
-      let param = "dog";
-
-      // if (optionChain) {
-      //   if (optionChain.length == 1 && optionChain[0].startsWith("-")) {
-      //     param = optionChain[0].toLowerCase().replaceAll("-", "");
-      //   }
-      // }
+      let param = "panda";
 
       return await getIntro(param);
-      // if (res.status) {
-      //   return res.jsx;
-      // }
     },
     description: "Intro",
   },
@@ -47,8 +24,13 @@ export const getTerminalOutput = async (input: string) => {
     return commandsList[command].action(optionChain);
   } catch {
     return {
-      raw: "error",
-      jsx: <>{"error"}</>,
+      raw: command + ": command not found",
+      jsx: (
+        <>
+          <p>{command + ": command not found"}</p>
+          <p>use 'help' for a list of available commands</p>
+        </>
+      ),
     };
   }
 };

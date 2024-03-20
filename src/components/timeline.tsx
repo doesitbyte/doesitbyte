@@ -7,7 +7,7 @@ import { getTerminalOutput } from "@/lib/commands/parent";
 import { ICommandReturn } from "@/lib/interfaces/commands";
 import { getIP } from "@/lib/actions";
 
-const initialCommands: string[] = ["start"];
+const initialCommands: string[] = ["welcome"];
 
 const Timeline = () => {
   const [history, setHistory] = useState<ITimeline[]>([]);
@@ -133,7 +133,7 @@ const Timeline = () => {
 
   return (
     <>
-      {loading ? (
+      {loading || user == "" ? (
         <div>loading ...</div>
       ) : (
         <div>
