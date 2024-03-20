@@ -28,7 +28,7 @@ export const getTerminalOutput = async (input: string) => {
       jsx: (
         <>
           <p>{command + ": command not found"}</p>
-          <p>use 'help' for a list of available commands</p>
+          <p>{"use 'help' for a list of available commands"}</p>
         </>
       ),
     };
