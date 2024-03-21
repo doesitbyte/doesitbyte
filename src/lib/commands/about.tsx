@@ -6,7 +6,9 @@ export const getAbout = async (): Promise<ICommandReturn> => {
     jsx: (
       <>
         <div>
-          <span className="text-textGreen">Hello, I'm Kaustubh Sharma!</span>
+          <span className="text-textGreen">
+            {"Hello, I'm Kaustubh Sharma!"}
+          </span>
         </div>
       </>
     ),
