@@ -9,7 +9,7 @@ export const getCommands = async (): Promise<ICommandReturn> => {
         {Object.keys(commandsList).map((command) => {
           const description = commandsList[command].description;
           return (
-            <p>
+            <p key={command}>
               {command}: {description}
             </p>
           );
