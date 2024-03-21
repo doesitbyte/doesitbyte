@@ -7,7 +7,7 @@ import { getTerminalOutput } from "@/lib/commands/parent";
 import { ICommandReturn } from "@/lib/interfaces/commands";
 import { getIP } from "@/lib/actions";
 
-const initialCommands: string[] = ["welcome"];
+const initialCommands: string[] = ["ssh doesitbyte"];
 
 const Timeline = () => {
   const [history, setHistory] = useState<ITimeline[]>([]);
@@ -134,7 +134,7 @@ const Timeline = () => {
   return (
     <>
       {loading || user == "" ? (
-        <div>loading ...</div>
+        <div>booting up ...</div>
       ) : (
         <div>
           <div>

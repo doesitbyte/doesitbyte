@@ -1,27 +1,27 @@
 import { ICommandsList } from "../interfaces/commands";
-import { getIntro } from "./intro";
+import { getBootUp } from "./boot";
+import { getCommands } from "./help";
 
 export const commandsList: { [key: string]: ICommandsList } = {
-  welcome: {
-    async action(optionChain) {
-      let param = "panda";
-
-      return await getIntro(param);
+  "ssh doesitbyte": {
+    async action() {
+      return await getBootUp("panda");
     },
-    description: "Intro",
+    description: "",
+  },
+  commands: {
+    async action() {
+      return await getCommands();
+    },
+    description: "get a list of all available commands",
   },
 };
 
 export const getTerminalOutput = async (input: string) => {
-  // Input processing
-
-  //get top level command and pass rest to command handler
-  let optionChain = input.trim().split(" ");
-  let command = optionChain[0];
-  optionChain = optionChain.slice(1);
+  const command = input;
 
   try {
-    return commandsList[command].action(optionChain);
+    return commandsList[command].action();
   } catch {
     return {
       raw: command + ": command not found",
@@ -34,14 +34,3 @@ export const getTerminalOutput = async (input: string) => {
     };
   }
 };
-
-/* const help = (param: string): string => {
-  let output: string;
-  for (const command in commandsList) {
-    if (commandsList[command]["options"]) {
-      for (const option in commandsList[command]["options"]) {
-      }
-    }
-  }
-  return "";
-}; */

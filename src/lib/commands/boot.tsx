@@ -2,8 +2,11 @@ import { animals } from "@/lib/animals";
 import { getIPLocation, getRandomQuote } from "../actions";
 import * as rdd from "react-device-detect";
 import { IDeviceData } from "../interfaces/deviceData";
+import { ICommandReturn } from "../interfaces/commands";
 
-export const getIntro = async (animal: string = "panda") => {
+export const getBootUp = async (
+  animal: string = "panda"
+): Promise<ICommandReturn> => {
   const quote = await getRandomQuote(true);
   const quoteContent = quote.content;
   const quoteAuthor = quote.author;
@@ -86,6 +89,7 @@ export const getIntro = async (animal: string = "panda") => {
             I wonder how the weather is in {locationCity} ...
           </span>
         </div>
+        <div>{JSON.stringify(deviceData)}</div>
       </>
     ),
   };
