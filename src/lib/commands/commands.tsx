@@ -6,11 +6,13 @@ export const getCommands = async (): Promise<ICommandReturn> => {
     raw: "",
     jsx: (
       <>
+        <div>list of available commands: </div>
+        <br></br>
         {Object.keys(commandsList).map((command) => {
           const description = commandsList[command].description;
           return (
             <p key={command}>
-              {command}: {description}
+              {command} - {description}
             </p>
           );
         })}

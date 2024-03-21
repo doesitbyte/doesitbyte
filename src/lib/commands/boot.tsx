@@ -12,7 +12,7 @@ export const getBootUp = async (
   const quoteAuthor = quote.author;
   const location = await getIPLocation(true);
   const locationCity = location.city;
-  const animalStr = animals[animal] || "dog";
+  const animalStr = animals[animal] || animals["panda"];
   const deviceData: IDeviceData = rdd.deviceDetect(navigator.userAgent);
   console.log(deviceData);
 
@@ -89,7 +89,8 @@ export const getBootUp = async (
             I wonder how the weather is in {locationCity} ...
           </span>
         </div>
-        <div>{JSON.stringify(deviceData)}</div>
+        <br></br>
+        <p>{"enter 'commands' for a list of available commands"}</p>
       </>
     ),
   };

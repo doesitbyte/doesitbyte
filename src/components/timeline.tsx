@@ -7,7 +7,7 @@ import { getTerminalOutput } from "@/lib/commands/parent";
 import { ICommandReturn } from "@/lib/interfaces/commands";
 import { getIP } from "@/lib/actions";
 
-const initialCommands: string[] = ["ssh doesitbyte"];
+const initialCommands: string[] = ["ssh doesitbyte -a panda"];
 
 const Timeline = () => {
   const [history, setHistory] = useState<ITimeline[]>([]);
@@ -160,7 +160,7 @@ const Timeline = () => {
               value={input}
               autoComplete="off"
               autoFocus
-              className="appearance-none bg-transparent outline-none focus:outline-none text-black dark:text-textWhite ml-2"
+              className="appearance-none bg-transparent outline-none focus:outline-none text-black dark:text-textWhite ml-2 w-full"
               type="text"
               name="terminalInput"
               placeholder="enter command here ..."
