@@ -1,8 +1,8 @@
 # 👋 Hello, I'm Kaustubh
 
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/yourlinkedinprofile/)
-[![Twitter](https://img.shields.io/badge/-Twitter-1DA1F2?style=flat&logo=Twitter&logoColor=white)](https://twitter.com/yourtwitterhandle)
-[![Website](https://img.shields.io/badge/-Portfolio-yellow?style=flat&logo=Google-Chrome&logoColor=white)](https://yourportfolio.com)
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/kaustubh-s/)
+[![Twitter](https://img.shields.io/badge/-Twitter-1DA1F2?style=flat&logo=Twitter&logoColor=white)](https://twitter.com/doesitbyte)
+[![Website](https://img.shields.io/badge/-Portfolio-yellow?style=flat&logo=Google-Chrome&logoColor=white)](https://doesitbyte.vercel.app/)
 
 ## 🚀 About Me
 
